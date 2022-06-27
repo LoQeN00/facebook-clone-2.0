@@ -111,18 +111,17 @@ export const AddPost = ({ setNewlyAddedPosts }: Props) => {
           )}
         </div>
       )}
-      {inputValue ||
-        (imageToPost && (
-          <div className="w-full flex justify-center items-center">
-            <button
-              disabled={imageIsLoading || postSending}
-              className="border-2 border-black py-2 px-4 rounded-3xl"
-              onClick={() => createPost()}
-            >
-              Opublikuj
-            </button>
-          </div>
-        ))}
+      {(inputValue || imageToPost) && (
+        <div className="w-full flex justify-center items-center">
+          <button
+            disabled={imageIsLoading || postSending}
+            className="border-2 border-black py-2 px-4 rounded-3xl"
+            onClick={() => createPost()}
+          >
+            Opublikuj
+          </button>
+        </div>
+      )}
       <div className="h-[1px] bg-gray-200 w-full"></div>
       <div className="flex justify-evenly">
         <div className="flex space-x-3 hover:bg-gray-200 px-4 py-2 rounded-2xl transition ease-in-out cursor-pointer">

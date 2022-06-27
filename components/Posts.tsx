@@ -17,6 +17,7 @@ export const Posts = (props: Props) => {
   console.log(postsData);
   console.log(pagination);
   console.log(newlyAddedPosts);
+  console.log(lastPostElementRef);
 
   useEffect(() => {
     if (loading) return;

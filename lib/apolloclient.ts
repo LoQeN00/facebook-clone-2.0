@@ -1,4 +1,5 @@
 import { ApolloClient, HttpLink, ApolloLink, InMemoryCache, concat } from '@apollo/client';
+import { offsetLimitPagination } from '@apollo/client/utilities';
 
 const authMiddleware = new ApolloLink((operation, forward) => {
   // add the authorization to the headers
@@ -18,7 +19,7 @@ const client = new ApolloClient({
       Query: {
         fields: {
           posts: {
-            keyArgs: false,
+            keyArgs: [],
             merge(existing = [], incoming) {
               return [...existing, ...incoming];
             },

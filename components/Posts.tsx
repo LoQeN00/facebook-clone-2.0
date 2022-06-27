@@ -7,17 +7,12 @@ import { AddPost } from '../components/AddPost';
 type Props = {};
 
 export const Posts = (props: Props) => {
-  const [pagination, setPagination] = useState<{ take: number; offset: number }>({ take: 2, offset: 0 });
-  const { postsData, loading, setPostsData, fetchMore } = usePosts(pagination.take, pagination.offset);
+  // const [pagination, setPagination] = useState<{ take: number; offset: number }>({ take: 2, offset: 0 });
+  const { postsData, loading, setPostsData, fetchMore } = usePosts();
   const [newlyAddedPosts, setNewlyAddedPosts] = useState<Post[] | []>([]);
 
   const lastPostElementRef = useRef<HTMLDivElement | null>(null);
   const observer = useRef<IntersectionObserver | null>(null);
-
-  console.log(postsData);
-  console.log(pagination);
-  console.log(newlyAddedPosts);
-  console.log(lastPostElementRef);
 
   useEffect(() => {
     if (loading) return;
@@ -27,26 +22,30 @@ export const Posts = (props: Props) => {
     observer.current = new IntersectionObserver(
       async (entries) => {
         if (entries[0].isIntersecting) {
-          setPagination((prevState) => {
-            return {
-              take: 2,
-              offset: prevState.offset + 2,
-            };
+          // setPagination((prevState) => {
+          //   return {
+          //     take: 2,
+          //     offset: prevState.offset + 2,
+          //   };
+          // });
+
+          fetchMore({
+            variables: { take: 2, offset: postsData.length },
           });
         }
       },
-      { root: null, rootMargin: '50px', threshold: 1.0 }
+      { root: null, rootMargin: '0px', threshold: 1.0 }
     );
 
     if (lastPostElementRef.current) {
       observer.current.observe(lastPostElementRef.current);
     }
-  }, [loading, postsData, setPostsData]);
+  }, [loading, postsData, setPostsData, newlyAddedPosts]);
 
-  useEffect(() => {
-    if (pagination.offset === 0) return;
-    fetchMore({ variables: { take: pagination.take, offset: pagination.offset + newlyAddedPosts.length } });
-  }, [pagination, fetchMore, newlyAddedPosts]);
+  // useEffect(() => {
+  //   if (pagination.offset === 0) return;
+
+  // }, [fetchMore, newlyAddedPosts, pagination]);
 
   return (
     <div className="w-[90%] max-w-3xl space-y-5 pb-36 md:pb-32">

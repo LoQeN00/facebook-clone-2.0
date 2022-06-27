@@ -14,6 +14,10 @@ export const Posts = (props: Props) => {
   const lastPostElementRef = useRef<HTMLDivElement | null>(null);
   const observer = useRef<IntersectionObserver | null>(null);
 
+  console.log(postsData);
+  console.log(pagination);
+  console.log(newlyAddedPosts);
+
   useEffect(() => {
     if (loading) return;
     if (observer.current) {

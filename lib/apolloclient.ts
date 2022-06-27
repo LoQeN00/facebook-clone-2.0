@@ -20,7 +20,7 @@ const client = new ApolloClient({
           posts: {
             keyArgs: false,
             merge(existing = [], incoming) {
-              return [...incoming];
+              return [...existing, ...incoming];
             },
           },
         },

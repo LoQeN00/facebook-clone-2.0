@@ -13,7 +13,7 @@ export const usePosts = (take: number, offset: number) => {
     },
     onCompleted(data) {
       setPostsData((prevState) => {
-        return [...prevState!, ...data.posts];
+        return [...data.posts];
       });
     },
   });
